@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var buttons: List<Button>
     private var playerOneTurn = true
+    private var draw = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,11 +94,20 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Please choose another tile", Toast.LENGTH_LONG).show()
                 }
             }
+            draw = true
+            for(button in buttons){
+                if(button.text.isBlank()){draw = false}
+            }
+            if(draw){gameOver(0)}
         }
     }
 
     private fun gameOver(player: Int){
-        tvWinner.text = "Player $player Wins!"
+        if(player>0){
+            tvWinner.text = "Player $player Wins!"
+        }else{
+            tvWinner.text = "Draw"
+        }
         tvWinner.isVisible = true
         tvWinner.startAnimation(winnerAnimation)
         tvPlayAgain.isVisible = true
