@@ -124,6 +124,18 @@
         android:visibility="gone"
         android:gravity="center"/>
 
+    <TextView
+        android:id="@+id/tvPlayAgain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/llBottom"
+        android:text="Play Again?"
+        android:textSize="20dp"
+        android:visibility="gone"
+        android:gravity="center"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -141,6 +153,7 @@
             android:id="@+id/cvPlayer1">
 
             <TextView
+                android:id="@+id/tvP1Text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -157,6 +170,7 @@
             android:id="@+id/cvPlayer2">
 
             <TextView
+                android:id="@+id/tvP2Text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

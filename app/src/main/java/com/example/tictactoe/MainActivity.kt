@@ -3,6 +3,8 @@ package com.example.tictactoe
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -20,10 +22,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btBot: Button
     private lateinit var btBotR: Button
 
+    private lateinit var tvPlayAgain: TextView
     private lateinit var tvWinner: TextView
+    private lateinit var winnerAnimation: Animation
 
     private lateinit var cvPlayer1: CardView
     private lateinit var cvPlayer2: CardView
+
+    private lateinit var tvP1Text: TextView
+    private lateinit var tvP2Text: TextView
 
     private lateinit var buttons: List<Button>
     private var playerOneTurn = true
@@ -32,10 +39,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        tvPlayAgain = findViewById(R.id.tvPlayAgain)
         tvWinner = findViewById(R.id.tvWinner)
+        winnerAnimation = AnimationUtils.loadAnimation(this, R.anim.winner_animation)
 
         cvPlayer1 = findViewById(R.id.cvPlayer1)
         cvPlayer2 = findViewById(R.id.cvPlayer2)
+
+        tvP1Text = findViewById(R.id.tvP1Text)
+        tvP2Text = findViewById(R.id.tvP2Text)
 
         cvPlayer1.setBackgroundColor(Color.MAGENTA)
 
@@ -61,8 +73,7 @@ class MainActivity : AppCompatActivity() {
                     if(playerOneTurn){
                         button.text = "X"
                         if(checkWin()){
-                            tvWinner.text = "Player 1 Wins!"
-                            tvWinner.isVisible = true
+                            gameOver(1)
                         }else{
                             playerOneTurn = false
                             cvPlayer2.setBackgroundColor(Color.MAGENTA)
@@ -71,8 +82,7 @@ class MainActivity : AppCompatActivity() {
                     }else{
                         button.text = "O"
                         if(checkWin()){
-                            tvWinner.text = "Player 2 Wins!"
-                            tvWinner.isVisible = true
+                            gameOver(2)
                         }else{
                             playerOneTurn = true
                             cvPlayer1.setBackgroundColor(Color.MAGENTA)
@@ -84,6 +94,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun gameOver(player: Int){
+        tvWinner.text = "Player $player Wins!"
+        tvWinner.isVisible = true
+        tvWinner.startAnimation(winnerAnimation)
+        tvPlayAgain.isVisible = true
+        tvP1Text.text = "YES"
+        cvPlayer1.setOnClickListener { this.recreate() }
+        tvP2Text.text = "NO"
+        cvPlayer1.setBackgroundColor(Color.BLUE)
+        cvPlayer2.setBackgroundColor(Color.BLUE)
     }
 
     private fun checkWin(): Boolean{
